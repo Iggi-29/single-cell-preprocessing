@@ -1,0 +1,74 @@
+###########################################
+#Welcome to zUMIs
+#below, please fill the mandatory inputs
+#We expect full paths for all files.
+###########################################
+
+project: SRR95_raw
+
+sequence_files:
+  file1: 
+    name: /home/vant/Escritorio/trim/raw_data/SRR12965695/SRR12965695_1.fastq.gz
+    base_definition:
+      - BC(1-16)
+      - UMI(17-28)
+  file2:
+    name:  /home/vant/Escritorio/trim/raw_data/SRR12965695/SRR12965695_2.fastq.gz
+    base_definition:
+      - cDNA(1-99)
+
+#reference genome setup
+reference:
+  STAR_index: /home/vant/Escritorio/genomes/zraw/mus_STAR_idx_NOGTF
+  GTF_file: /home/vant/Escritorio/genomes/zraw/Mus_musculus.GRCm38.98.gtf
+  additional_files: ~
+  additional_STAR_params: ''
+
+#output directory
+out_dir: /home/vant/Escritorio/demultiplex/zUMIS/SRR95
+
+#number of processors to use
+num_threads: 16
+mem_limit: 20
+
+#barcode & UMI filtering options
+filter_cutoffs:
+  BC_filter:
+    num_bases: 1
+    phred: 20
+  UMI_filter:
+    num_bases: 1
+    phred: 20
+
+#Options for Barcode handling
+barcodes:
+  barcode_num: ~
+  barcode_file: ~ 
+  automatic: yes 
+  BarcodeBinning: 1
+  nReadsperCell: 100
+
+#Options related to counting of reads towards expression profiles
+counting_opts:
+  introns: no
+  downsampling: '0' 
+  strand: 0
+  Ham_Dist: 1
+  velocyto: no 
+  primaryHit: yes 
+  twoPass: no 
+
+#produce stats files and plots?
+make_stats: yes
+
+
+#Start zUMIs from stage. Possible TEXT(Filtering, Mapping, Counting, Summarising)
+which_Stage: Filtering
+
+#define dependencies program paths
+zUMIs_directory: /home/vant/zUMIs
+read_layout: SE
+samtools_exec: samtools
+pigz_exec: pigz
+STAR_exec: STAR
+Rscript_exec: Rscript
